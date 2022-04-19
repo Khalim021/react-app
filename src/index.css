@@ -11,8 +11,15 @@
     gap: 1rem;
 }
 
+.btn-style {
+    position: absolute;
+    top: 0;
+    right: 0;
+}
 
-
+label:not(:last-child) {
+    margin-right: 1rem;
+}
 
 
 
