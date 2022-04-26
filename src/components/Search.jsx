@@ -1,7 +1,7 @@
 import React, {useState} from "react";
 
 export default function Search({searchMovie}) {
-  const [search, setSearch] = useState('');
+  const [search, setSearch] = useState("iron");
   const [type, setType] = useState('all');
   
   const handlSearch = (e) => {
@@ -11,7 +11,7 @@ export default function Search({searchMovie}) {
   }
 
   const handleFilter = (e) => {
-    setType(type.target.dataset.type)
+    setType(e.target.dataset.type)
     searchMovie(search, e.target.dataset.type)
   }
 
