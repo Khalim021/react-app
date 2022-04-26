@@ -1,24 +1,20 @@
-import React from "react";
+import React, {useState} from "react";
 
-export default class Search extends React.Component {
-  state = {
-    search: 'iron man',
-    type: 'all'
-  }
+export default function Search({searchMovie}) {
+  const [search, setSearch] = useState('');
+  const [type, setType] = useState('all');
   
-  handlSearch = (e) => {
+  const handlSearch = (e) => {
     if(e.key === 'Enter') {
-      this.props.searchMovie(this.state.search, this.state.type);
+      searchMovie(search, type);
     }
   }
 
-  handleFilter = (e) => {
-    this.setState(() => ({type: e.target.dataset.type}), () => {
-      this.props.searchMovie(this.state.search, this.state.type)
-    })
+  const handleFilter = (e) => {
+    setType(type.target.dataset.type)
+    searchMovie(search, e.target.dataset.type)
   }
 
-  render() {
     return (
       <div className="row">
         <div className="input-field col s12">
@@ -27,12 +23,14 @@ export default class Search extends React.Component {
           placeholder="Search" 
           type="search" 
           className="validate" 
-          value={this.state.search}
-          onChange={(e) => this.setState({search: e.target.value})}
-          onKeyDown={this.handlSearch}
+          value={search}
+          onChange={(e) => setSearch(e.target.value)}
+          onKeyDown={handlSearch}
           />
 
-          <button className="btn btn-style" onClick={() => this.props.searchMovie(this.state.search, this.state.type)}>
+          <button 
+          className="btn btn-style" 
+          onClick={() => searchMovie(search, type)}>
             Search Movie
           </button>
 
@@ -44,8 +42,8 @@ export default class Search extends React.Component {
           name="type" 
           type="radio" 
           data-type="all" 
-          onChange={this.handleFilter} 
-          checked={this.state.type === 'all'}
+          onChange={handleFilter} 
+          checked={type === 'all'}
           />
           <span>All</span>
         </label>
@@ -55,8 +53,8 @@ export default class Search extends React.Component {
           name="type" 
           type="radio" 
           data-type="movie" 
-          onChange={this.handleFilter}
-          checked={this.state.type === 'movie'}
+          onChange={handleFilter}
+          checked={type === 'movie'}
           />
           <span>Movies only</span>
         </label>
@@ -66,13 +64,12 @@ export default class Search extends React.Component {
           name="type" 
           type="radio" 
           data-type="series"
-          onChange={this.handleFilter} 
-          checked={this.state.type === 'series'}
+          onChange={handleFilter} 
+          checked={type === 'series'}
           />
           <span>TV series only</span>
         </label>
         </div>
       </div>
     )
-  }
 }
